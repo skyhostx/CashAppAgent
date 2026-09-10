@@ -45,7 +45,7 @@ export const Testimonials: React.FC = () => {
                 <div className="flex items-center gap-3">
                   <img
                     src={t.avatar}
-                    alt={t.name}
+                    alt={`Verified customer ${t.name} from ${t.location}`}
                     className="w-10 h-10 rounded-full object-cover border border-emerald-500/40"
                     referrerPolicy="no-referrer"
                   />

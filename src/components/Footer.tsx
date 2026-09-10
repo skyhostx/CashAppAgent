@@ -266,6 +266,17 @@ export const Footer: React.FC<FooterProps> = ({ onSelectProduct, onOpenOrderLook
                   <span>Contact 24/7 Desk</span>
                 </a>
               </li>
+              <li>
+                <a 
+                  href="/sitemap"
+                  data-full-url="https://cashappagent.com/sitemap"
+                  onClick={(e) => handleLinkClick('sitemap', e)} 
+                  className="hover:text-[#00D632] transition-colors flex items-center gap-1.5 text-left w-full cursor-pointer group"
+                >
+                  <ArrowRight className="w-3 h-3 text-[#00D632] group-hover:translate-x-0.5 transition-all" />
+                  <span className="text-emerald-400 font-semibold">Sitemap &amp; Index</span>
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -297,7 +308,13 @@ export const Footer: React.FC<FooterProps> = ({ onSelectProduct, onOpenOrderLook
             &copy; {new Date().getFullYear()} <strong className="text-white">CashappAgent</strong> (cashappagent.com). All rights reserved.
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-4">
+            <a href="/robots.txt" target="_blank" className="hover:text-white transition-colors">robots.txt</a>
+            <span>&bull;</span>
+            <a href="/sitemap.xml" target="_blank" className="hover:text-white transition-colors">sitemap.xml</a>
+            <span>&bull;</span>
+            <a href="/sitemap" onClick={(e) => handleLinkClick('sitemap', e)} className="hover:text-white transition-colors">Sitemap Directory</a>
+            <span>&bull;</span>
             <span className="flex items-center gap-1 text-slate-300">
               <ShieldCheck className="w-3.5 h-3.5 text-[#00D632]" />
               100% Encrypted &bull; 30-Day Guarantee

@@ -1,8 +1,18 @@
+# robots.txt for https://cashappagent.com
+# Verified Cash App Accounts Provider - Full Search Engine Directives
+
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /login/
 Disallow: /*?*checkout=true
 Disallow: /*?*cart=true
+Disallow: /*?*token=*
+Disallow: /*?*session=*
 
 # Googlebot specific directives
 User-agent: Googlebot
@@ -11,22 +21,46 @@ Allow: /*.js$
 Allow: /*.css$
 Allow: /*.svg$
 Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.webp$
 Allow: /*.xml$
 Allow: /*.xsl$
 Allow: /*.txt$
+Disallow: /api/
+Disallow: /admin/
+Disallow: /checkout/
+
+# Googlebot-Image
+User-agent: Googlebot-Image
+Allow: /
+Allow: /*.svg$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.webp$
+
+# Googlebot-Mobile
+User-agent: Googlebot-Mobile
+Allow: /
 
 # Bingbot specific directives
 User-agent: Bingbot
 Allow: /
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.svg$
+Allow: /*.xml$
+Disallow: /api/
+Disallow: /admin/
 
-# Host
+# Host configuration
 Host: https://cashappagent.com
 
-# Rank Math Primary Sitemap Index
-Sitemap: https://cashappagent.com/sitemap_index.xml
-Sitemap: https://cashappagent.com/product-sitemap.xml
-Sitemap: https://cashappagent.com/vintage-sitemap.xml
-Sitemap: https://cashappagent.com/page-sitemap.xml
-Sitemap: https://cashappagent.com/post-sitemap.xml
-Sitemap: https://cashappagent.com/category-sitemap.xml
+# Rank Math XML Sitemap Index and Sub-sitemaps
 Sitemap: https://cashappagent.com/sitemap.xml
+Sitemap: https://cashappagent.com/sitemap_index.xml
+Sitemap: https://cashappagent.com/page-sitemap.xml
+Sitemap: https://cashappagent.com/product-sitemap.xml
+Sitemap: https://cashappagent.com/post-sitemap.xml
+Sitemap: https://cashappagent.com/vintage-sitemap.xml
+Sitemap: https://cashappagent.com/category-sitemap.xml

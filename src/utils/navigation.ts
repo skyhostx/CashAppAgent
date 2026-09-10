@@ -135,9 +135,16 @@ export function getPageFromLocation(): PageView {
       if (['faq', 'help'].includes(rawHash)) return 'faq';
       if (['contact', 'support'].includes(rawHash)) return 'contact';
       if (['sitemap', 'sitemap.html', 'sitemap_index', 'sitemap_index.html'].includes(rawHash)) return 'sitemap';
+      if (['404', 'not-found'].includes(rawHash)) return 'not-found';
     }
 
-    return 'home';
+    // Root paths return home
+    if (rawPath === '/' || rawPath === '' || rawPath === '/index.html') {
+      return 'home';
+    }
+
+    // Any other unrecognized path returns 404 not-found
+    return 'not-found';
   } catch {
     return 'home';
   }

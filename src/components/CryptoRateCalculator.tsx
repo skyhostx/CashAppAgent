@@ -300,7 +300,7 @@ export const CryptoRateCalculator: React.FC = () => {
                 <div className="p-4 bg-white rounded-2xl w-40 h-40 mx-auto flex items-center justify-center animate-in zoom-in-95 shadow-2xl">
                   <img
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${gateway.address}`}
-                    alt={`${gateway.id} QR Code`}
+                    alt={`Cryptocurrency deposit QR code for ${gateway.name} on ${gateway.network} network`}
                     className="w-full h-full object-contain"
                   />
                 </div>

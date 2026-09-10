@@ -399,6 +399,25 @@ export function getSeoMetadata(page: PageView): SeoMetaTags {
         ],
       };
 
+    case 'not-found':
+      return {
+        title: '404 - Page Not Found | CashappAgent',
+        description: 'The requested page could not be found. Browse our verified Cash App accounts with BTC limits up to $25k, safety guides, and 24/7 support at CashappAgent.',
+        keywords: '404 not found, cashappagent, buy verified cash app accounts, error 404',
+        canonical: `${SITE_ORIGIN}/404`,
+        ogTitle: '404 - Page Not Found | CashappAgent',
+        ogDescription: 'The requested page could not be found. Explore our verified Cash App accounts catalog and safety guides.',
+        ogUrl: `${SITE_ORIGIN}/404`,
+        ogType: 'website',
+        twitterTitle: '404 - Page Not Found | CashappAgent',
+        twitterDescription: 'The requested page could not be found on CashappAgent.',
+        jsonLd: [
+          baseOrganization,
+          baseWebSite,
+          breadcrumbsList,
+        ],
+      };
+
     case 'home':
     default:
       return {
@@ -494,6 +513,8 @@ export function applySeoMetadata(page: PageView): void {
     setMetaTag('name', 'description', meta.description);
     setMetaTag('name', 'keywords', meta.keywords);
     setMetaTag('name', 'robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+    setMetaTag('name', 'googlebot', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
+    setMetaTag('name', 'bingbot', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
 
     // Open Graph Meta Tags
     setMetaTag('property', 'og:title', meta.ogTitle);
@@ -502,6 +523,9 @@ export function applySeoMetadata(page: PageView): void {
     setMetaTag('property', 'og:type', meta.ogType);
     setMetaTag('property', 'og:site_name', 'CashappAgent');
     setMetaTag('property', 'og:image', `${SITE_ORIGIN}/favicon.svg`);
+    setMetaTag('property', 'og:image:alt', 'CashappAgent - Buy Verified Cash App Accounts');
+    setMetaTag('property', 'og:image:type', 'image/svg+xml');
+    setMetaTag('property', 'og:locale', 'en_US');
 
     // Twitter Meta Tags
     setMetaTag('property', 'twitter:title', meta.twitterTitle);
@@ -509,6 +533,7 @@ export function applySeoMetadata(page: PageView): void {
     setMetaTag('property', 'twitter:url', meta.ogUrl);
     setMetaTag('property', 'twitter:card', 'summary_large_image');
     setMetaTag('property', 'twitter:image', `${SITE_ORIGIN}/favicon.svg`);
+    setMetaTag('property', 'twitter:image:alt', 'CashappAgent - Buy Verified Cash App Accounts');
 
     // Canonical Link Tag
     let canonicalEl = document.querySelector('link[rel="canonical"]');
