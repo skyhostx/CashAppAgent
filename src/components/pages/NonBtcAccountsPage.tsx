@@ -4,6 +4,7 @@ import { ACCOUNT_PRODUCTS } from '../../data/products';
 import { ProductCard } from '../ProductCard';
 import { ShieldCheck, CreditCard, Landmark, ArrowLeft, CheckCircle2, DollarSign } from 'lucide-react';
 import { NonBtcAccountsSeoArticle } from '../seo/NonBtcAccountsSeoArticle';
+import { isModifiedClick } from '../../utils/navigation';
 
 interface NonBtcAccountsPageProps {
   onBuyNow: (product: AccountProduct) => void;
@@ -22,13 +23,18 @@ export const NonBtcAccountsPage: React.FC<NonBtcAccountsPageProps> = ({
     <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
       {/* Breadcrumb */}
       <div className="flex items-center justify-between">
-        <button
-          onClick={onNavigateHome}
+        <a
+          href="/"
+          onClick={(e) => {
+            if (isModifiedClick(e)) return;
+            e.preventDefault();
+            onNavigateHome();
+          }}
           className="inline-flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-[#00D632] transition-colors bg-slate-900/80 px-3.5 py-2 rounded-xl border border-slate-800"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Home</span>
-        </button>
+        </a>
         <span className="text-xs font-semibold text-slate-500">
           Showing {nonBtcProducts.length} Non-BTC USD Accounts
         </span>

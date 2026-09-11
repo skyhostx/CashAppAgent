@@ -1,6 +1,7 @@
 import React from 'react';
 import { ACCOUNT_PRODUCTS } from '../data/products';
 import { AccountProduct } from '../types';
+import { isModifiedClick, getProductUrl } from '../utils/navigation';
 import { Check, X, Bitcoin, ShieldCheck, Zap, ArrowRight } from 'lucide-react';
 
 interface ComparisonTableProps {
@@ -61,7 +62,17 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ onBuyNow }) =>
                         </div>
                         <div>
                           <div className="font-extrabold text-white text-sm flex items-center gap-1.5">
-                            {prod.name}
+                            <a
+                              href={getProductUrl(prod)}
+                              onClick={(e) => {
+                                if (isModifiedClick(e)) return;
+                                e.preventDefault();
+                                onBuyNow(prod);
+                              }}
+                              className="hover:text-[#00D632] hover:underline transition-colors inline-flex items-center gap-1.5"
+                            >
+                              <span>{prod.name}</span>
+                            </a>
                             {prod.isPopular && (
                               <span className="bg-[#00D632] text-black text-[9px] font-black px-1.5 rounded-full">
                                 BEST
@@ -107,13 +118,18 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ onBuyNow }) =>
                     </td>
 
                     <td className="p-4 sm:p-5 text-right">
-                      <button
-                        onClick={() => onBuyNow(prod)}
+                      <a
+                        href={getProductUrl(prod)}
+                        onClick={(e) => {
+                          if (isModifiedClick(e)) return;
+                          e.preventDefault();
+                          onBuyNow(prod);
+                        }}
                         className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#00D632] hover:bg-[#00FF3D] text-black font-black text-xs shadow-md shadow-[#00D632]/20 cursor-pointer active:scale-95 transition-all"
                       >
                         <span>Buy ${prod.price}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
+                      </a>
                     </td>
                   </tr>
                 );

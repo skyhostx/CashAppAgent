@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CashAppLogo } from './CashAppLogo';
 import { CONTACT_INFO } from '../data/cryptoGateways';
 import { PageView } from '../types';
-import { PAGE_ROUTES } from '../utils/navigation';
+import { PAGE_ROUTES, isModifiedClick } from '../utils/navigation';
 import { 
   Send, 
   Phone, 
@@ -73,6 +73,10 @@ export const Header: React.FC<HeaderProps> = ({
   ];
 
   const handleNavClick = (page: PageView, e?: React.MouseEvent) => {
+    if (e && isModifiedClick(e)) {
+      // Allow browser to natively open the page in a new tab or window
+      return;
+    }
     if (e) e.preventDefault();
     onNavigate(page);
     setMobileMenuOpen(false);

@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowLeft, Sparkles, Building2 } from 'lucide-react';
 import { BulkOrderConfigurator } from '../BulkOrderConfigurator';
 import { CartItem } from '../../types';
+import { isModifiedClick } from '../../utils/navigation';
 
 interface BulkOrdersPageProps {
   onNavigateHome: () => void;
@@ -16,13 +17,18 @@ export const BulkOrdersPage: React.FC<BulkOrdersPageProps> = ({
     <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
       {/* Breadcrumb */}
       <div className="flex items-center justify-between">
-        <button
-          onClick={onNavigateHome}
+        <a
+          href="/"
+          onClick={(e) => {
+            if (isModifiedClick(e)) return;
+            e.preventDefault();
+            onNavigateHome();
+          }}
           className="inline-flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-[#00D632] transition-colors bg-slate-900/80 px-3.5 py-2 rounded-xl border border-slate-800"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Home</span>
-        </button>
+        </a>
         <span className="text-xs font-semibold text-slate-500">
           Agency &amp; Reseller Wholesale Tiers
         </span>

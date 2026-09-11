@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AccountProduct } from '../types';
+import { isModifiedClick, getProductUrl } from '../utils/navigation';
 import { 
   Bitcoin, 
   Check, 
@@ -67,15 +68,27 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {/* Category & Stock Badge */}
           <div className="flex items-center gap-2 flex-wrap pr-16">
             {isBtc ? (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F7931A]/15 text-[#F7931A] border border-[#F7931A]/30 text-xs font-bold">
+              <a
+                href="/buy-btc-enabled-cashapp-accounts"
+                onClick={(e) => {
+                  if (isModifiedClick(e)) return;
+                }}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F7931A]/15 text-[#F7931A] border border-[#F7931A]/30 text-xs font-bold hover:bg-[#F7931A]/25 transition-colors"
+              >
                 <Bitcoin className="w-3.5 h-3.5" />
                 BTC Enabled
-              </span>
+              </a>
             ) : (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-700/40 text-xs font-bold">
+              <a
+                href="/buy-non-btc-cashapp-accounts"
+                onClick={(e) => {
+                  if (isModifiedClick(e)) return;
+                }}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-700/40 text-xs font-bold hover:bg-emerald-900/60 transition-colors"
+              >
                 <ShieldCheck className="w-3.5 h-3.5 text-[#00D632]" />
                 USD Verified (Non-BTC)
-              </span>
+              </a>
             )}
             <span className="text-xs text-slate-400 font-medium">Instant Stock</span>
           </div>
@@ -83,7 +96,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {/* Product Title */}
           <div>
             <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight font-['Outfit',sans-serif] group-hover:text-[#00D632] transition-colors">
-              {product.name}
+              <a
+                href={getProductUrl(product)}
+                onClick={(e) => {
+                  if (isModifiedClick(e)) return;
+                  e.preventDefault();
+                  setIsDetailsModalOpen(true);
+                }}
+                className="hover:underline"
+              >
+                {product.name}
+              </a>
             </h3>
 
             {/* Product Short Description */}
@@ -114,14 +137,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 <span className="text-slate-500 font-semibold shrink-0">Focus:</span>
                 <span className="text-emerald-300/90 font-mono text-[10px] truncate">{product.focusKeyword}</span>
               </div>
-              <button
-                onClick={() => setIsDetailsModalOpen(true)}
+              <a
+                href={getProductUrl(product)}
+                onClick={(e) => {
+                  if (isModifiedClick(e)) return;
+                  e.preventDefault();
+                  setIsDetailsModalOpen(true);
+                }}
                 className="text-[#00D632] hover:underline text-[10px] font-bold shrink-0 flex items-center gap-0.5 cursor-pointer"
                 title="View Full Product Dossier & SEO specs"
               >
                 <Eye className="w-3 h-3" />
                 <span>Quick View</span>
-              </button>
+              </a>
             </div>
           )}
 
@@ -224,15 +252,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Card Actions */}
         <div className="p-6 sm:p-7 pt-0 space-y-2.5">
-          <button
+          <a
             id={`buy-now-btn-${product.id}`}
-            onClick={() => onBuyNow(product)}
+            href={getProductUrl(product)}
+            onClick={(e) => {
+              if (isModifiedClick(e)) return;
+              e.preventDefault();
+              onBuyNow(product);
+            }}
             className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#00A827] via-[#00D632] to-[#00FF44] hover:from-[#00B82B] hover:to-[#00FF55] text-black font-black text-sm rounded-xl shadow-lg shadow-[#00D632]/25 hover:shadow-[#00D632]/40 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <Zap className="w-4 h-4 fill-black" />
             <span>Buy Now &bull; ${product.price} (Crypto)</span>
             <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-          </button>
+          </a>
 
           <div className="grid grid-cols-2 gap-2">
             <button
@@ -244,13 +277,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               <span>Add to Cart</span>
             </button>
 
-            <button
-              onClick={() => setIsDetailsModalOpen(true)}
+            <a
+              href={getProductUrl(product)}
+              onClick={(e) => {
+                if (isModifiedClick(e)) return;
+                e.preventDefault();
+                setIsDetailsModalOpen(true);
+              }}
               className="py-2.5 px-3 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 text-emerald-300 font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <Eye className="w-3.5 h-3.5 text-[#00D632]" />
               <span>Full Details</span>
-            </button>
+            </a>
           </div>
         </div>
       </div>

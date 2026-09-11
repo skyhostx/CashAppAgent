@@ -113,6 +113,13 @@ export function getPageFromLocation(): PageView {
       return 'not-found';
     }
 
+    // Direct product URL handling (e.g. /product/btc-4k or /buy-btc-enabled-cashapp-accounts#btc-4k)
+    if (rawPath.startsWith('/product/') || rawPath.startsWith('/products/')) {
+      if (rawPath.includes('btc-') && !rawPath.includes('non-btc-')) return 'btc-accounts';
+      if (rawPath.includes('non-btc-')) return 'non-btc-accounts';
+      return 'all-accounts';
+    }
+
     // Check pathname routes
     if (rawPath === '/blog' || rawPath.endsWith('/blog')) return 'blog';
     if (rawPath.includes('buy-verified-cashapp-accounts') || rawPath.includes('all-accounts')) return 'all-accounts';
@@ -124,9 +131,15 @@ export function getPageFromLocation(): PageView {
     if (rawPath.includes('contact') || rawPath.includes('support')) return 'contact';
     if (rawPath.includes('sitemap')) return 'sitemap';
 
-    // Check hash routes
+    // Direct product slug checks in pathname
+    if (rawPath.includes('btc-4k') || rawPath.includes('btc-10k') || rawPath.includes('btc-25k')) return 'btc-accounts';
+    if (rawPath.includes('non-btc-4k') || rawPath.includes('non-btc-10k') || rawPath.includes('non-btc-15k')) return 'non-btc-accounts';
+
+    // Check hash routes and direct product anchors
     if (rawHash) {
       if (rawHash === 'blog') return 'blog';
+      if (['btc-4k', 'btc-10k', 'btc-25k'].includes(rawHash)) return 'btc-accounts';
+      if (['non-btc-4k', 'non-btc-10k', 'non-btc-15k'].includes(rawHash)) return 'non-btc-accounts';
       if (['buy-verified-cashapp-accounts', 'all-accounts', 'accounts', 'catalog'].includes(rawHash)) return 'all-accounts';
       if (['buy-btc-enabled-cashapp-accounts', 'btc-accounts', 'btc-enabled', 'btc'].includes(rawHash)) return 'btc-accounts';
       if (['buy-non-btc-cashapp-accounts', 'non-btc-accounts', 'non-btc'].includes(rawHash)) return 'non-btc-accounts';
@@ -174,3 +187,33 @@ export function setBrowserPage(page: PageView) {
     }
   }
 }
+
+/**
+ * Detects if a mouse click event has modifier keys held down (Ctrl, Cmd, Shift, Alt, or middle-click).
+ * When true, the default browser action (such as opening in a new tab or window) should NOT be prevented.
+ */
+export function isModifiedClick(event?: React.MouseEvent | MouseEvent): boolean {
+  if (!event) return false;
+  return Boolean(
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey ||
+    (event.button !== undefined && event.button !== 0)
+  );
+}
+
+/**
+ * Returns the canonical URL for any product matching Google XML sitemap
+ */
+export function getProductUrl(product: string | { id: string; btcEnabled?: boolean; category?: string }): string {
+  const id = typeof product === 'string' ? product : product.id;
+  const isBtc = typeof product === 'string'
+    ? id.startsWith('btc-')
+    : ('btcEnabled' in product ? Boolean(product.btcEnabled) : product.category === 'btc-enabled');
+
+  return isBtc
+    ? `/buy-btc-enabled-cashapp-accounts#${id}`
+    : `/buy-non-btc-cashapp-accounts#${id}`;
+}
+

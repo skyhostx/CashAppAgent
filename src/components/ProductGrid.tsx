@@ -3,6 +3,7 @@ import { ACCOUNT_PRODUCTS } from '../data/products';
 import { AccountCategory, AccountProduct } from '../types';
 import { ProductCard } from './ProductCard';
 import { Bitcoin, ShieldCheck, Layers, Sparkles, CheckCircle2 } from 'lucide-react';
+import { isModifiedClick } from '../utils/navigation';
 
 interface ProductGridProps {
   selectedCategory: 'all' | AccountCategory;
@@ -54,9 +55,14 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 
         {/* Category Tabs */}
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10">
-          <button
+          <a
             id="tab-all-accounts"
-            onClick={() => onCategoryChange('all')}
+            href="/buy-verified-cashapp-accounts"
+            onClick={(e) => {
+              if (isModifiedClick(e)) return;
+              e.preventDefault();
+              onCategoryChange('all');
+            }}
             className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all flex items-center gap-2 cursor-pointer ${
               selectedCategory === 'all'
                 ? 'bg-[#00D632] text-black shadow-lg shadow-[#00D632]/25 scale-105'
@@ -65,11 +71,16 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           >
             <Layers className="w-4 h-4" />
             <span>All Categories ({ACCOUNT_PRODUCTS.length})</span>
-          </button>
+          </a>
 
-          <button
+          <a
             id="tab-btc-enabled"
-            onClick={() => onCategoryChange('btc-enabled')}
+            href="/buy-btc-enabled-cashapp-accounts"
+            onClick={(e) => {
+              if (isModifiedClick(e)) return;
+              e.preventDefault();
+              onCategoryChange('btc-enabled');
+            }}
             className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all flex items-center gap-2 cursor-pointer ${
               selectedCategory === 'btc-enabled'
                 ? 'bg-gradient-to-r from-[#F7931A] to-amber-500 text-black shadow-lg shadow-amber-500/25 scale-105'
@@ -81,11 +92,16 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
             <span className="bg-black/30 text-white text-[10px] px-1.5 py-0.2 rounded-full">
               Hot
             </span>
-          </button>
+          </a>
 
-          <button
+          <a
             id="tab-non-btc"
-            onClick={() => onCategoryChange('non-btc')}
+            href="/buy-non-btc-cashapp-accounts"
+            onClick={(e) => {
+              if (isModifiedClick(e)) return;
+              e.preventDefault();
+              onCategoryChange('non-btc');
+            }}
             className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all flex items-center gap-2 cursor-pointer ${
               selectedCategory === 'non-btc'
                 ? 'bg-[#00D632] text-black shadow-lg shadow-[#00D632]/25 scale-105'
@@ -94,7 +110,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           >
             <ShieldCheck className="w-4 h-4" />
             <span>Non-BTC CashApp ({nonBtcCount})</span>
-          </button>
+          </a>
         </div>
 
         {/* Product Cards Grid */}

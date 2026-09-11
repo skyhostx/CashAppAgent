@@ -3,7 +3,7 @@ import { CashAppLogo } from './CashAppLogo';
 import { CRYPTO_GATEWAYS } from '../data/cryptoGateways';
 import { ACCOUNT_PRODUCTS } from '../data/products';
 import { AccountProduct, PageView } from '../types';
-import { PAGE_ROUTES } from '../utils/navigation';
+import { PAGE_ROUTES, isModifiedClick, getProductUrl } from '../utils/navigation';
 import { 
   ShieldCheck, 
   Lock, 
@@ -24,11 +24,24 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onSelectProduct, onOpenOrderLookup, onNavigate }) => {
   const handleLinkClick = (page: PageView, e?: React.MouseEvent) => {
+    if (e && isModifiedClick(e)) {
+      // Allow browser to natively open the link in a new tab or window
+      return;
+    }
     if (onNavigate) {
       if (e) e.preventDefault();
       onNavigate(page);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  };
+
+  const handleProductClick = (product: AccountProduct, e: React.MouseEvent) => {
+    if (isModifiedClick(e)) {
+      // Allow browser to natively open the product in a new tab or window
+      return;
+    }
+    e.preventDefault();
+    onSelectProduct(product);
   };
 
   return (
@@ -116,12 +129,14 @@ export const Footer: React.FC<FooterProps> = ({ onSelectProduct, onOpenOrderLook
           
           {/* Brand Info (2 cols) */}
           <div className="lg:col-span-2 space-y-4">
-            <button 
+            <a 
+              href="/"
               onClick={(e) => handleLinkClick('home', e)} 
-              className="cursor-pointer text-left focus:outline-none"
+              className="cursor-pointer text-left focus:outline-none inline-block"
+              title="CashappAgent Home"
             >
               <CashAppLogo size="lg" />
-            </button>
+            </a>
             <p className="text-xs leading-relaxed text-slate-400 max-w-sm">
               <strong className="text-white">CashappAgent (cashappagent.com)</strong> is the premier verified vendor for aged, 100% identity-verified Cash App accounts with Bitcoin withdrawal capabilities and limits up to $25,000. All accounts include primary email access and full identity documentation.
             </p>
@@ -149,15 +164,16 @@ export const Footer: React.FC<FooterProps> = ({ onSelectProduct, onOpenOrderLook
             <ul className="space-y-2.5">
               {ACCOUNT_PRODUCTS.filter(p => p.btcEnabled).map((p) => (
                 <li key={p.id}>
-                  <button
-                    onClick={() => onSelectProduct(p)}
+                  <a
+                    href={getProductUrl(p)}
+                    onClick={(e) => handleProductClick(p, e)}
                     className="text-left text-slate-400 hover:text-[#00D632] transition-all flex items-center justify-between w-full p-1.5 rounded-lg hover:bg-white/5 group cursor-pointer"
                   >
                     <span className="group-hover:translate-x-0.5 transition-transform">{p.name}</span>
                     <span className="text-[#00D632] font-mono font-bold bg-[#00D632]/10 px-1.5 py-0.5 rounded text-[11px]">
                       ${p.price}
                     </span>
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -179,15 +195,16 @@ export const Footer: React.FC<FooterProps> = ({ onSelectProduct, onOpenOrderLook
             <ul className="space-y-2.5">
               {ACCOUNT_PRODUCTS.filter(p => !p.btcEnabled).map((p) => (
                 <li key={p.id}>
-                  <button
-                    onClick={() => onSelectProduct(p)}
+                  <a
+                    href={getProductUrl(p)}
+                    onClick={(e) => handleProductClick(p, e)}
                     className="text-left text-slate-400 hover:text-[#00D632] transition-all flex items-center justify-between w-full p-1.5 rounded-lg hover:bg-white/5 group cursor-pointer"
                   >
                     <span className="group-hover:translate-x-0.5 transition-transform">{p.name}</span>
                     <span className="text-[#00D632] font-mono font-bold bg-[#00D632]/10 px-1.5 py-0.5 rounded text-[11px]">
                       ${p.price}
                     </span>
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>

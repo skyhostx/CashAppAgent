@@ -1,5 +1,6 @@
 import React from 'react';
 import { CONTACT_INFO } from '../data/cryptoGateways';
+import { isModifiedClick } from '../utils/navigation';
 import { 
   ShieldCheck, 
   Zap, 
@@ -64,14 +65,19 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onSelectBtc }) => {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
-              <button
+              <a
                 id="hero-explore-accounts-btn"
-                onClick={onExploreClick}
+                href="/buy-verified-cashapp-accounts"
+                onClick={(e) => {
+                  if (isModifiedClick(e)) return;
+                  e.preventDefault();
+                  onExploreClick();
+                }}
                 className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#00A827] via-[#00D632] to-[#00FF44] hover:from-[#00B82B] hover:to-[#00FF55] text-black font-black text-base rounded-2xl shadow-xl shadow-[#00D632]/25 hover:shadow-[#00D632]/40 active:scale-95 transition-all flex items-center justify-center gap-3 cursor-pointer"
               >
                 <span>Buy Verified Accounts</span>
                 <ArrowRight className="w-5 h-5 stroke-[2.5]" />
-              </button>
+              </a>
 
               <a
                 id="hero-telegram-support-btn"

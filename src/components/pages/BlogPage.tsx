@@ -14,7 +14,7 @@ import {
   CheckCircle2,
   ShieldCheck
 } from 'lucide-react';
-import { SITE_ORIGIN } from '../../utils/navigation';
+import { SITE_ORIGIN, isModifiedClick } from '../../utils/navigation';
 
 interface BlogPageProps {
   onNavigateHome: () => void;
@@ -94,13 +94,22 @@ export const BlogPage: React.FC<BlogPageProps> = ({
     <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-10">
       {/* Breadcrumb Navigation */}
       <div className="flex items-center justify-between">
-        <button
-          onClick={selectedPost ? handleBackToList : onNavigateHome}
+        <a
+          href={selectedPost ? "/blog" : "/"}
+          onClick={(e) => {
+            if (isModifiedClick(e)) return;
+            e.preventDefault();
+            if (selectedPost) {
+              handleBackToList();
+            } else {
+              onNavigateHome();
+            }
+          }}
           className="inline-flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-[#00D632] transition-colors bg-slate-900/80 px-3.5 py-2 rounded-xl border border-slate-800 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>{selectedPost ? 'Back to All Articles' : 'Back to Home'}</span>
-        </button>
+        </a>
         
         <div className="flex items-center gap-2 text-xs font-mono text-slate-500">
           <span className="hidden sm:inline">URL:</span>
@@ -282,11 +291,16 @@ export const BlogPage: React.FC<BlogPageProps> = ({
           {/* Articles Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {filteredPosts.map((post) => (
-              <div
+              <a
                 key={post.id}
                 id={post.slug}
-                onClick={() => handleSelectPost(post)}
-                className="group p-6 sm:p-8 rounded-3xl bg-slate-900/80 hover:bg-slate-900 border border-slate-800 hover:border-emerald-500/40 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-emerald-950/30 flex flex-col justify-between space-y-4 cursor-pointer"
+                href={`/blog#${post.slug}`}
+                onClick={(e) => {
+                  if (isModifiedClick(e)) return;
+                  e.preventDefault();
+                  handleSelectPost(post);
+                }}
+                className="group p-6 sm:p-8 rounded-3xl bg-slate-900/80 hover:bg-slate-900 border border-slate-800 hover:border-emerald-500/40 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-emerald-950/30 flex flex-col justify-between space-y-4 cursor-pointer block"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2">
@@ -319,7 +333,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({
                     <ArrowRight className="w-4 h-4" />
                   </div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>

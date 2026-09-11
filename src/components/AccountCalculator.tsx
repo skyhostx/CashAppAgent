@@ -1,6 +1,7 @@
 import React, { useState, useId } from 'react';
 import { ACCOUNT_PRODUCTS } from '../data/products';
 import { AccountProduct } from '../types';
+import { isModifiedClick, getProductUrl } from '../utils/navigation';
 import { 
   Calculator, 
   Bitcoin, 
@@ -236,14 +237,19 @@ export const AccountCalculator: React.FC<AccountCalculatorProps> = ({ onSelectPr
 
             {/* Action CTA */}
             <div className="pt-6 relative z-10">
-              <button
+              <a
                 id="calculator-buy-recommended-btn"
-                onClick={() => onSelectProduct(recommendedProduct)}
+                href={getProductUrl(recommendedProduct)}
+                onClick={(e) => {
+                  if (isModifiedClick(e)) return;
+                  e.preventDefault();
+                  onSelectProduct(recommendedProduct);
+                }}
                 className="w-full py-4 rounded-2xl bg-gradient-to-r from-[#00A827] via-[#00D632] to-[#00FF44] hover:from-[#00B82B] text-black font-black text-sm shadow-xl shadow-[#00D632]/25 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Instant Checkout (${recommendedProduct.price})</span>
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </a>
               <div className="text-[10px] text-center text-slate-400 mt-2">
                 🔒 Instant Auto-Delivery to Email/Telegram via Crypto Checkout
               </div>
