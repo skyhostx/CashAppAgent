@@ -4,6 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
+    <!-- Instant Single Page App URL Canonicalization & Deep Link Restorer -->
+    <script>
+      (function(l) {
+        if (l.search && (l.search.startsWith('?/') || l.search.startsWith('?p=/') || l.search[1] === '/')) {
+          var raw = l.search.replace(/^\?(p=)?\/?/, '/');
+          var parts = raw.split('&');
+          var cleanPath = '/' + parts[0].replace(/^\/+/, '').replace(/~and~/g, '&');
+          var remainingQuery = parts.slice(1).map(function(s) { return s.replace(/~and~/g, '&'); }).join('&');
+          var targetUrl = cleanPath + (remainingQuery ? '?' + remainingQuery : '') + l.hash;
+          try {
+            window.history.replaceState(null, '', targetUrl);
+          } catch (e) {
+            // fallback if iframe restricts pushState
+          }
+        }
+      })(window.location);
+    </script>
+
     <!-- Primary SEO Metadata -->
     <title>Buy Verified Cash App Accounts | BTC &amp; Non-BTC Enabled ($4k-$25k Limits) - CashappAgent</title>
     <meta name="description" content="Buy 100% verified Cash App accounts with BTC enabled &amp; Non-BTC limits up to $25k. Instant delivery, SSN/ID verified, routing numbers, email access, 30-day warranty &amp; 24/7 support at CashappAgent." />

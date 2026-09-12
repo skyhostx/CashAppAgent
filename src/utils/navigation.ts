@@ -91,20 +91,60 @@ export const PAGE_ROUTES: Record<PageView, PageRouteInfo> = {
 };
 
 /**
+ * Cleans and canonicalizes any query redirects or hash-based URLs into clean SEO URLs.
+ * Converts /?/some-page or /?p=/some-page or /#some-page into clean /some-page immediately
+ */
+export function cleanAndNormalizeUrl(): void {
+  if (typeof window === 'undefined') return;
+
+  try {
+    const l = window.location;
+    // 1. Check for query redirect like /?/buy-non-btc-cashapp-accounts
+    if (l.search && (l.search.startsWith('?/') || l.search.startsWith('?p=/') || l.search[1] === '/')) {
+      const raw = l.search.replace(/^\?(p=)?\/?/, '/');
+      const parts = raw.split('&');
+      const cleanPath = '/' + parts[0].replace(/^\/+/, '').replace(/~and~/g, '&');
+      const remainingQuery = parts.slice(1).map(s => s.replace(/~and~/g, '&')).join('&');
+      const targetUrl = cleanPath + (remainingQuery ? '?' + remainingQuery : '') + l.hash;
+      window.history.replaceState(null, '', targetUrl);
+      return;
+    }
+
+    // 2. Check if root path has a page route in hash like /#buy-non-btc-cashapp-accounts
+    if (l.pathname === '/' || l.pathname === '') {
+      const hash = (l.hash || '').replace(/^#\/?/, '').toLowerCase();
+      for (const [key, route] of Object.entries(PAGE_ROUTES)) {
+        if (key !== 'home' && (hash === key || hash === route.path.replace(/^\//, ''))) {
+          window.history.replaceState(null, '', route.path);
+          return;
+        }
+      }
+    }
+  } catch {
+    // Ignore restrictions
+  }
+}
+
+/**
  * Determine page from pathname or hash. If path or hash is not recognized, safely defaults to 'home'.
  */
 export function getPageFromLocation(): PageView {
   if (typeof window === 'undefined') return 'home';
 
   try {
+    // Normalize and clean address bar URL immediately
+    cleanAndNormalizeUrl();
+
     let rawPath = (window.location.pathname || '/').toLowerCase().replace(/\/$/, '') || '/';
     const rawHash = (window.location.hash || '').toLowerCase().replace(/^#\/?/, '').replace(/\/$/, '');
 
     // Support SPA redirect query parameters (e.g. /?/some-page)
-    if (window.location.search && window.location.search.startsWith('?/')) {
-      const queryPath = window.location.search.slice(1).split('&')[0];
+    if (window.location.search && (window.location.search.startsWith('?/') || window.location.search.startsWith('?p=/') || window.location.search[1] === '/')) {
+      const raw = window.location.search.replace(/^\?(p=)?\/?/, '/');
+      const parts = raw.split('&');
+      const queryPath = parts[0].replace(/^\/+/, '').replace(/~and~/g, '&');
       if (queryPath) {
-        rawPath = ('/' + queryPath.replace(/^\//, '')).toLowerCase().replace(/\/$/, '');
+        rawPath = ('/' + queryPath).toLowerCase().replace(/\/$/, '') || '/';
       }
     }
 
@@ -173,9 +213,10 @@ export function setBrowserPage(page: PageView) {
   document.title = route.title;
 
   try {
-    // Keep clean URL pathname if supported
+    // Keep clean URL pathname if supported, always removing /?/ or unwanted query redirect artifacts
     const newUrl = route.path;
-    if (window.location.pathname !== newUrl) {
+    const hasQueryRedirect = Boolean(window.location.search && (window.location.search.startsWith('?/') || window.location.search.startsWith('?p=/')));
+    if (window.location.pathname !== newUrl || hasQueryRedirect) {
       window.history.pushState({ page }, route.title, newUrl);
     }
   } catch {
