@@ -335,7 +335,12 @@ for (const route of routes) {
 
   const destFile = path.join(targetDir, 'index.html');
   fs.writeFileSync(destFile, customizedHtml, 'utf8');
-  console.log(`Generated SEO static page: ${route.slug}/index.html`);
+
+  // Also write [slug].html directly to dist root for non-trailing slash 200 OK resolution
+  const destHtmlFile = path.join(distDir, `${route.slug}.html`);
+  fs.writeFileSync(destHtmlFile, customizedHtml, 'utf8');
+
+  console.log(`Generated SEO static page: ${route.slug}/index.html & ${route.slug}.html`);
 }
 
 // Copy critical SEO files to root if they don't exist
