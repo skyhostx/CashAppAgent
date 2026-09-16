@@ -172,28 +172,26 @@ export default function App() {
   };
 
   /**
-   * Smooth animated page transition with reload indicator and URL pushState update
+   * Smooth, instantaneous page navigation with immediate state & browser URL update
    */
   const navigateTo = useCallback((page: PageView) => {
     setTargetLoadingPage(page);
     setIsReloading(true);
-    setLoadingProgress(25);
+    setLoadingProgress(40);
 
-    setTimeout(() => {
-      setLoadingProgress(70);
-    }, 100);
+    // Immediately switch page and push URL
+    setCurrentPage(page);
+    setBrowserPage(page);
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
+    // Quick subtle top progress completion
     setTimeout(() => {
       setLoadingProgress(100);
-      setCurrentPage(page);
-      setBrowserPage(page);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
       setTimeout(() => {
         setIsReloading(false);
         setLoadingProgress(0);
-      }, 250);
-    }, 280);
+      }, 150);
+    }, 50);
   }, []);
 
   /**

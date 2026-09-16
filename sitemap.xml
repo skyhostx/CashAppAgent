@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Core Homepage -->
+  <url>
+    <loc>https://cashappagent.com/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Shop & Account Category Hubs -->
+  <url>
+    <loc>https://cashappagent.com/buy-verified-cashapp-accounts</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://cashappagent.com/buy-btc-enabled-cashapp-accounts</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://cashappagent.com/buy-non-btc-cashapp-accounts</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Wholesale & Bulk Orders -->
+  <url>
+    <loc>https://cashappagent.com/bulk-orders</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Anti-Ban Security Guide & Warm-up Blueprint -->
+  <url>
+    <loc>https://cashappagent.com/safety-guide</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Official Blog & Articles -->
+  <url>
+    <loc>https://cashappagent.com/blog</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- FAQ & 30-Day Warranty Policy -->
+  <url>
+    <loc>https://cashappagent.com/faq</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- 24/7 Agent Support Desk -->
+  <url>
+    <loc>https://cashappagent.com/contact</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- Website Sitemap & Page Index -->
+  <url>
+    <loc>https://cashappagent.com/sitemap</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.70</priority>
+  </url>
+</urlset>

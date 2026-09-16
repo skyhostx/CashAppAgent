@@ -1,0 +1,22 @@
+# robots.txt for https://cashappagent.com
+# Clean Google-friendly robots configuration
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /login/
+Disallow: /*?*checkout=true
+Disallow: /*?*cart=true
+Disallow: /*?*token=*
+Disallow: /*?*session=*
+Disallow: /*?*fbclid=*
+Disallow: /*?*gclid=*
+
+# XML Sitemaps
+Sitemap: https://cashappagent.com/sitemap.xml
+Sitemap: https://cashappagent.com/sitemap_index.xml
+
